@@ -31,7 +31,7 @@ class MyPluginTest {
                             build)
         assertTrue 'We expect to keep the build around',
                    build.isKeepLog()
-        assertEquals("foobar",
+        assertEquals("build for 1",
                      build.getDescription());
     }
 }
