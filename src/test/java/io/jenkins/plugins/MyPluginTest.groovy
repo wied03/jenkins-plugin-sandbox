@@ -20,30 +20,7 @@ class MyPluginTest {
     void foo() {
         // arrange
         def project = j.createProject(WorkflowJob)
-        def script = [
-                'pipeline {',
-                    'agent any',
-                    'stages {',
-                        'stage("Build") {',
-                            'steps {',
-                                'doStuff(theParameter: "foobar")',
-                                'echo "our env variable is ${env.targetEnv}"',
-                            '}',
-                        '}',
-                        'stage("Build again") {',
-//                            'when {',
-//                                'anyOf {',
-//                                    'expression { return doStuff(theParameter: "foobar") == "TST"}',
-//                                '}',
-//                            '}',
-                            'steps {',
-                                'echo "we ran!"',
-                            '}',
-                        '}',
-                    '}',
-                '}'
-        ]
-        project.definition = new CpsFlowDefinition(script.join('\n'))
+        project.definition = new CpsFlowDefinition(new File('src/test/resources/Jenkinsfile').text)
 
         // act
         def build = j.buildAndAssertSuccess(project)

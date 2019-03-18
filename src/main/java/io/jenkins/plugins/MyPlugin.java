@@ -44,7 +44,9 @@ public final class MyPlugin extends Step {
             StepContext context = getContext();
             WorkflowRun run = context.get(WorkflowRun.class);
             TaskListener listener = context.get(TaskListener.class);
+
             run.keepLog(true);
+
 //            StashManager.stash((Run)this.getContext().get(Run.class),
 //                               "theStash",
 //                               (FilePath)this.getContext().get(FilePath.class),

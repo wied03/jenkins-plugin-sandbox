@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage("Ready") {
+            steps {
+                writeFile file: 'howdy',
+                          text: 'hello there'
+            }
+        }
+        stage("Build") {
+            environment {
+                FOO = readFile("howdy")
+            }
+            steps {
+                doStuff(theParameter: "foobar")
+                echo "our env variable is ${env.FOO}"
+            }
+        }
+        stage("Build again") {
+            steps {
+                echo "we ran!"
+            }
+        }
+    }
+}
