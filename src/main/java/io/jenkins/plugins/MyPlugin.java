@@ -53,5 +53,11 @@ public final class MyPlugin extends Step {
         public String getFunctionName() {
             return "doStuff";
         }
+
+        @Nonnull
+        @Override
+        public String getDisplayName() {
+            return "Will execute some stuff";
+        }
     }
 }
