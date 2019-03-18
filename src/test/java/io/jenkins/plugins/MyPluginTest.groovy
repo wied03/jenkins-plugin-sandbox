@@ -46,6 +46,7 @@ class MyPluginTest {
         def project = j.createProject(WorkflowJob)
         project.definition = new CpsFlowDefinition(new File('src/test/resources/Jenkinsfile').text)
         def firstRun = j.buildAndAssertSuccess(project)
+        def secondRunThatWeDontCareAbout = j.buildAndAssertSuccess(project)
 
         // act
         def action = firstRun.getAction(RestartDeclarativePipelineAction)

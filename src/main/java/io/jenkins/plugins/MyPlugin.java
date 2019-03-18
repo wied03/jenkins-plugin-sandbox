@@ -4,9 +4,11 @@ import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
+import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.plugins.git.GitChangeSet;
 import hudson.scm.ChangeLogSet;
+import org.jenkinsci.plugins.pipeline.modeldefinition.actions.RestartFlowFactoryAction;
 import org.jenkinsci.plugins.workflow.flow.StashManager;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jenkinsci.plugins.workflow.steps.*;
@@ -45,13 +47,21 @@ public final class MyPlugin extends Step {
         protected String run() throws Exception {
             StepContext context = getContext();
             WorkflowRun run = context.get(WorkflowRun.class);
+            RestartFlowFactoryAction restartAction = run.getAction(RestartFlowFactoryAction.class);
             TaskListener listener = context.get(TaskListener.class);
+            PrintStream logger = listener.getLogger();
+            if (restartAction != null) {
+                String runId = restartAction.getOriginRunId();
+                Run originalBuild = Run.fromExternalizableId(runId);
+                logger.println("orig run is " + originalBuild);
+            }
+
             run.keepLog(true);
             EnvVars environment = run.getEnvironment(listener);
-            run.setDescription("build for "+environment.get("BUILD_NUMBER"));
+            run.setDescription("build for " + environment.get("BUILD_NUMBER"));
             FilePath filePath = context.get(FilePath.class);
             FilePath lastBuild = filePath.child("lastBuild");
-            PrintStream logger = listener.getLogger();
+
             logger.println("writing to " + lastBuild.toURI());
             lastBuild.write("hello",
                             null);
@@ -69,7 +79,7 @@ public final class MyPlugin extends Step {
                 for (Object git : change.getItems()) {
                     GitChangeSet casted = (GitChangeSet) git;
                     for (GitChangeSet.Path f : casted.getAffectedFiles()) {
-                        logger.println("changeset has file "+f.getPath());
+                        logger.println("changeset has file " + f.getPath());
                     }
                 }
             }
