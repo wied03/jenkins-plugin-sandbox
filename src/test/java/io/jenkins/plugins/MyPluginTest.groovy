@@ -24,8 +24,7 @@ class MyPluginTest {
         def build = j.buildAndAssertSuccess(project)
 
         // assert
-        j.assertLogContains('howdy',
+        j.assertLogContains('we ran with parameter foobar',
                             build)
-        fail 'write the test'
     }
 }
