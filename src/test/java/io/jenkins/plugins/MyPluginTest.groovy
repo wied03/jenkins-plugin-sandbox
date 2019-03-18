@@ -8,6 +8,8 @@ import org.junit.Test
 import org.jvnet.hudson.test.BuildWatcher
 import org.jvnet.hudson.test.JenkinsRule
 
+import static junit.framework.Assert.assertTrue
+
 class MyPluginTest {
     @Rule
     public JenkinsRule j = new JenkinsRule()
@@ -26,5 +28,7 @@ class MyPluginTest {
         // assert
         j.assertLogContains('we ran with parameter foobar',
                             build)
+        assertTrue 'We expect to keep the build around',
+                   build.isKeepLog()
     }
 }

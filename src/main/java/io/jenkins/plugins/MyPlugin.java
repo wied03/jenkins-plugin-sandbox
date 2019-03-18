@@ -1,6 +1,7 @@
 package io.jenkins.plugins;
 
 import hudson.Extension;
+import hudson.model.Run;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -37,6 +38,8 @@ public final class MyPlugin extends Step {
 
         @Override
         protected Void run() throws Exception {
+            Run run = getContext().get(Run.class);
+            run.keepLog(true);
             listener.getLogger().println("we ran with parameter " + theParameter);
             return null;
         }
