@@ -27,6 +27,7 @@ class MyPluginTest {
                         'stage("Build") {',
                             'steps {',
                                 'doStuff(theParameter: "foobar")',
+                                'echo "our env variable is ${env.targetEnv}"',
                             '}',
                         '}',
                         'stage("Build again") {',

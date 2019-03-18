@@ -2,7 +2,11 @@ package io.jenkins.plugins;
 
 import hudson.EnvVars;
 import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.Run;
 import hudson.model.TaskListener;
+import org.jenkinsci.plugins.workflow.flow.StashManager;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -41,6 +45,15 @@ public final class MyPlugin extends Step {
             WorkflowRun run = context.get(WorkflowRun.class);
             TaskListener listener = context.get(TaskListener.class);
             run.keepLog(true);
+//            StashManager.stash((Run)this.getContext().get(Run.class),
+//                               "theStash",
+//                               (FilePath)this.getContext().get(FilePath.class),
+//                               (Launcher)this.getContext().get(Launcher.class),
+//                               (EnvVars)this.getContext().get(EnvVars.class),
+//                               (TaskListener)this.getContext().get(TaskListener.class),
+//                               null,
+//                               null,
+//                               false, false);
             listener.getLogger().println("changeset size " + run.getChangeSets().size());
             listener.getLogger().println("we ran with parameter " + theParameter);
             return "DEV";
