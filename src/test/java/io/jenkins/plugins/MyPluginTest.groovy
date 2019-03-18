@@ -1,5 +1,10 @@
 package io.jenkins.plugins
 
+import hudson.model.Action
+import hudson.model.Job
+import hudson.model.queue.QueueTaskFuture
+import jenkins.model.ParameterizedJobMixIn
+import org.jenkinsci.plugins.pipeline.modeldefinition.actions.RestartDeclarativePipelineAction
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
 import org.junit.ClassRule
@@ -33,5 +38,21 @@ class MyPluginTest {
                    build.isKeepLog()
         assertEquals("build for 1",
                      build.getDescription());
+    }
+
+    @Test
+    void restart() {
+        // arrange
+        def project = j.createProject(WorkflowJob)
+        project.definition = new CpsFlowDefinition(new File('src/test/resources/Jenkinsfile').text)
+        def firstRun = j.buildAndAssertSuccess(project)
+
+        // act
+        def action = firstRun.getAction(RestartDeclarativePipelineAction)
+        def responseFuture = action.run('Build').future
+        j.assertBuildStatusSuccess(responseFuture)
+
+        // assert
+        fail 'write the test'
     }
 }
