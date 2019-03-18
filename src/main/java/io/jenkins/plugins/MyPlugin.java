@@ -1,5 +1,6 @@
 package io.jenkins.plugins;
 
+import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -50,7 +51,11 @@ public final class MyPlugin extends Step {
     public static class DescriptorImpl extends StepDescriptor {
         @Override
         public Set<? extends Class<?>> getRequiredContext() {
-            return new HashSet<>();
+            HashSet<Class<?>> set = new HashSet<>();
+            set.add(WorkflowRun.class);
+            set.add(TaskListener.class);
+            set.add(EnvVars.class);
+            return set;
         }
 
         @Override
