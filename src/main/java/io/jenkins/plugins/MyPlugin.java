@@ -12,6 +12,7 @@ import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,9 +45,12 @@ public final class MyPlugin extends Step {
             StepContext context = getContext();
             WorkflowRun run = context.get(WorkflowRun.class);
             TaskListener listener = context.get(TaskListener.class);
-
             run.keepLog(true);
-
+            FilePath filePath = context.get(FilePath.class);
+            FilePath lastBuild = filePath.child("lastBuild");
+            listener.getLogger().println("writing to "+lastBuild.toURI());
+            lastBuild.write("hello",
+                            null);
 //            StashManager.stash((Run)this.getContext().get(Run.class),
 //                               "theStash",
 //                               (FilePath)this.getContext().get(FilePath.class),
@@ -69,7 +73,7 @@ public final class MyPlugin extends Step {
             HashSet<Class<?>> set = new HashSet<>();
             set.add(WorkflowRun.class);
             set.add(TaskListener.class);
-            set.add(EnvVars.class);
+            set.add(FilePath.class);
             return set;
         }
 
