@@ -18,7 +18,7 @@ class MyPluginTest {
     void foo() {
         // arrange
         def project = j.createProject(WorkflowJob)
-        project.definition = new CpsFlowDefinition("node { echo 'hello' }")
+        project.definition = new CpsFlowDefinition('node { step([$class: "io.jenkins.plugins.MyPlugin", theParameter: "foobar"]) }')
 
         // act
         def build = j.buildAndAssertSuccess(project)
