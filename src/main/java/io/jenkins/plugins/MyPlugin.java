@@ -1,5 +1,6 @@
 package io.jenkins.plugins;
 
+import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -41,6 +42,8 @@ public final class MyPlugin extends Step {
             TaskListener listener = context.get(TaskListener.class);
             run.keepLog(true);
             listener.getLogger().println("changeset size " + run.getChangeSets().size());
+            EnvVars envVars = context.get(EnvVars.class);
+            envVars.put("targetEnvironments", "DEV");
             listener.getLogger().println("we ran with parameter " + theParameter);
             return null;
         }

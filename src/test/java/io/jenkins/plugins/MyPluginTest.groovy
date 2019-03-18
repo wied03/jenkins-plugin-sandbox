@@ -22,14 +22,20 @@ class MyPluginTest {
         def project = j.createProject(WorkflowJob)
         def script = [
                 'pipeline {',
-                'agent any',
-                'stages {',
-                'stage("Build") {',
-                'steps {',
-                'doStuff(theParameter: "foobar")',
-                '}',
-                '}',
-                '}',
+                    'agent any',
+                    'stages {',
+                        'stage("Build") {',
+                            'steps {',
+                                'doStuff(theParameter: "foobar")',
+                                'echo "target environments are $env.targetEnvironments"',
+                            '}',
+                        '}',
+                        'stage("Build again") {',
+                            'steps {',
+                                'echo "target environments are $env.targetEnvironments"',
+                            '}',
+                        '}',
+                    '}',
                 '}'
         ]
         project.definition = new CpsFlowDefinition(script.join('\n'))
