@@ -59,6 +59,11 @@
             <version>4.5.5-3.0</version>
         </dependency>
         <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git</artifactId>
+            <version>3.9.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-aggregator</artifactId>
             <version>2.6</version>
@@ -75,6 +80,30 @@
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>mailer</artifactId>
             <version>1.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci</groupId>
+            <artifactId>annotation-indexer</artifactId>
+            <version>1.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git-client</artifactId>
+            <version>2.7.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>scm-api</artifactId>
+            <version>2.2.8</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-scm-step</artifactId>
+            <version>2.6</version>
             <scope>test</scope>
         </dependency>
         <!-- End avoiding upper bound errors in test -->

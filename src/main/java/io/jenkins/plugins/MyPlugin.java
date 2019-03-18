@@ -5,6 +5,8 @@ import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.TaskListener;
+import hudson.plugins.git.GitChangeSet;
+import hudson.scm.ChangeLogSet;
 import org.jenkinsci.plugins.workflow.flow.StashManager;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jenkinsci.plugins.workflow.steps.*;
@@ -61,6 +63,14 @@ public final class MyPlugin extends Step {
                                null,
                                false,
                                false);
+            for (ChangeLogSet change : run.getChangeSets()) {
+                for (Object git : change.getItems()) {
+                    GitChangeSet casted = (GitChangeSet) git;
+                    for (GitChangeSet.Path f : casted.getAffectedFiles()) {
+                        logger.println("changeset has file "+f.getPath());
+                    }
+                }
+            }
             logger.println("changeset size " + run.getChangeSets().size());
             logger.println("we ran with parameter " + theParameter);
             return "DEV";
