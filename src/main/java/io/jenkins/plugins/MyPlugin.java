@@ -8,7 +8,9 @@ import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public final class MyPlugin extends Step {
@@ -36,16 +38,14 @@ public final class MyPlugin extends Step {
         }
 
         @Override
-        protected Void run() throws Exception {
+        protected String run() throws Exception {
             StepContext context = getContext();
             WorkflowRun run = context.get(WorkflowRun.class);
             TaskListener listener = context.get(TaskListener.class);
             run.keepLog(true);
             listener.getLogger().println("changeset size " + run.getChangeSets().size());
-            EnvVars envVars = context.get(EnvVars.class);
-            envVars.put("targetEnvironments", "DEV");
             listener.getLogger().println("we ran with parameter " + theParameter);
-            return null;
+            return "DEV";
         }
     }
 
