@@ -27,18 +27,18 @@ public final class MyPlugin extends Step {
     public static final class Execution extends SynchronousNonBlockingStepExecution {
         // TODO: Is this the right way to do this? It's serializable (the step isn't so we can't put that here)
         private String theParameter;
-        private transient TaskListener listener;
 
         protected Execution(@Nonnull StepContext context,
                             String theParameter) throws Exception {
             super(context);
             this.theParameter = theParameter;
-            this.listener = context.get(TaskListener.class);
         }
 
         @Override
         protected Void run() throws Exception {
-            WorkflowRun run = getContext().get(WorkflowRun.class);
+            StepContext context = getContext();
+            WorkflowRun run = context.get(WorkflowRun.class);
+            TaskListener listener = context.get(TaskListener.class);
             run.keepLog(true);
             listener.getLogger().println("changeset size " + run.getChangeSets().size());
             listener.getLogger().println("we ran with parameter " + theParameter);
