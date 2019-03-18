@@ -4,7 +4,6 @@ import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.Run;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.flow.StashManager;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -12,7 +11,7 @@ import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ public final class MyPlugin extends Step {
     }
 
     @Override
-    public StepExecution start(StepContext context) throws Exception {
+    public StepExecution start(StepContext context) {
         return new Execution(context,
                              this.theParameter);
     }
@@ -48,20 +47,22 @@ public final class MyPlugin extends Step {
             run.keepLog(true);
             FilePath filePath = context.get(FilePath.class);
             FilePath lastBuild = filePath.child("lastBuild");
-            listener.getLogger().println("writing to "+lastBuild.toURI());
+            PrintStream logger = listener.getLogger();
+            logger.println("writing to " + lastBuild.toURI());
             lastBuild.write("hello",
                             null);
-            StashManager.stash((Run)this.getContext().get(Run.class),
+            StashManager.stash(run,
                                "theStash",
-                               (FilePath)this.getContext().get(FilePath.class),
-                               (Launcher)this.getContext().get(Launcher.class),
-                               (EnvVars)this.getContext().get(EnvVars.class),
-                               (TaskListener)this.getContext().get(TaskListener.class),
+                               filePath,
+                               context.get(Launcher.class),
+                               context.get(EnvVars.class),
+                               listener,
                                "lastBuild",
                                null,
-                               false, false);
-            listener.getLogger().println("changeset size " + run.getChangeSets().size());
-            listener.getLogger().println("we ran with parameter " + theParameter);
+                               false,
+                               false);
+            logger.println("changeset size " + run.getChangeSets().size());
+            logger.println("we ran with parameter " + theParameter);
             return "DEV";
         }
     }
@@ -74,6 +75,8 @@ public final class MyPlugin extends Step {
             set.add(WorkflowRun.class);
             set.add(TaskListener.class);
             set.add(FilePath.class);
+            set.add(Launcher.class);
+            set.add(EnvVars.class);
             return set;
         }
 
