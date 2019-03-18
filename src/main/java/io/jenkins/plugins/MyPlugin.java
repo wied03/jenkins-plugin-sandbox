@@ -19,7 +19,8 @@ public final class MyPlugin extends Step {
 
     @Override
     public StepExecution start(StepContext context) throws Exception {
-        return new Execution(context, this);
+        return new Execution(context,
+                             this.theParameter);
     }
 
     public static final class Execution extends SynchronousNonBlockingStepExecution {
@@ -28,15 +29,15 @@ public final class MyPlugin extends Step {
         private transient TaskListener listener;
 
         protected Execution(@Nonnull StepContext context,
-                            MyPlugin step) throws Exception {
+                            String theParameter) throws Exception {
             super(context);
-            this.theParameter = step.theParameter;
+            this.theParameter = theParameter;
             this.listener = context.get(TaskListener.class);
         }
 
         @Override
         protected Void run() throws Exception {
-            listener.getLogger().println("we ran with parameter "+ theParameter);
+            listener.getLogger().println("we ran with parameter " + theParameter);
             return null;
         }
     }
