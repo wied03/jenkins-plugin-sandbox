@@ -58,15 +58,21 @@
             <artifactId>workflow-aggregator</artifactId>
             <version>2.6</version>
             <scope>test</scope>
-            <exclusions>
-                <!-- Quiet down maven upper bound enforcer, it doesn't seem to ignore
-                 test scope properly -->
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>mailer</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+        <!-- Begin avoiding upper bound errors in test -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>script-security</artifactId>
+            <version>1.46</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>mailer</artifactId>
+            <version>1.20</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- End avoiding upper bound errors in test -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>junit</artifactId>
