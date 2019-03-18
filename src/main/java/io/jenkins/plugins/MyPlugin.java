@@ -1,11 +1,9 @@
 package io.jenkins.plugins;
 
 import hudson.Extension;
-import hudson.model.Run;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jenkinsci.plugins.workflow.steps.*;
-import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
