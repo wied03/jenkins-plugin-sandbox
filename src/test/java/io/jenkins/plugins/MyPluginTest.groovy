@@ -20,7 +20,19 @@ class MyPluginTest {
     void foo() {
         // arrange
         def project = j.createProject(WorkflowJob)
-        project.definition = new CpsFlowDefinition('node { doStuff(theParameter: "foobar") }')
+        def script = [
+                'pipeline {',
+                'agent any',
+                'stages {',
+                'stage("Build") {',
+                'steps {',
+                'doStuff(theParameter: "foobar")',
+                '}',
+                '}',
+                '}',
+                '}'
+        ]
+        project.definition = new CpsFlowDefinition(script.join('\n'))
 
         // act
         def build = j.buildAndAssertSuccess(project)
