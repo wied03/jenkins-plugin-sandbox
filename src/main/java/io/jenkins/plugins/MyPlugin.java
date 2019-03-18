@@ -1,6 +1,5 @@
 package io.jenkins.plugins;
 
-import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.TaskListener;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -8,9 +7,7 @@ import org.jenkinsci.plugins.workflow.steps.*;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public final class MyPlugin extends Step {
@@ -32,7 +29,7 @@ public final class MyPlugin extends Step {
         private String theParameter;
 
         protected Execution(@Nonnull StepContext context,
-                            String theParameter) throws Exception {
+                            String theParameter) {
             super(context);
             this.theParameter = theParameter;
         }
