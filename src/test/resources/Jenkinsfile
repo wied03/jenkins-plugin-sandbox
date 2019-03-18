@@ -5,15 +5,16 @@ pipeline {
             steps {
                 writeFile file: 'howdy',
                           text: 'hello there'
+                echo "build number ${env.BUILD_NUMBER}"
             }
         }
         stage("Build") {
             environment {
-                FOO = readFile("howdy")
+                BUILD_NUMBER = readFile("howdy")
             }
             steps {
                 doStuff(theParameter: "foobar")
-                echo "our env variable is ${env.FOO}"
+                echo "our env variable is ${env.BUILD_NUMBER}"
                 echo "our file variable is ${readFile('lastBuild')}"
             }
         }
