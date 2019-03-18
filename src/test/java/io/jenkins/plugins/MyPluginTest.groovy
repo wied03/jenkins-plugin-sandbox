@@ -8,6 +8,7 @@ import org.junit.Test
 import org.jvnet.hudson.test.BuildWatcher
 import org.jvnet.hudson.test.JenkinsRule
 
+import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertTrue
 
 class MyPluginTest {
@@ -30,5 +31,7 @@ class MyPluginTest {
                             build)
         assertTrue 'We expect to keep the build around',
                    build.isKeepLog()
+        assertEquals("foobar",
+                     build.getDescription());
     }
 }

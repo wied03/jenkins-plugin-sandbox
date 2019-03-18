@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        BUILD_NUMBER = populateBuildNumber()
+    }
     stages {
         stage("Ready") {
             steps {
@@ -9,9 +12,7 @@ pipeline {
             }
         }
         stage("Build") {
-            environment {
-                BUILD_NUMBER = readFile("howdy")
-            }
+
             steps {
                 doStuff(theParameter: "foobar")
                 echo "our env variable is ${env.BUILD_NUMBER}"

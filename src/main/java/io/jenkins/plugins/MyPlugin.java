@@ -47,6 +47,8 @@ public final class MyPlugin extends Step {
             WorkflowRun run = context.get(WorkflowRun.class);
             TaskListener listener = context.get(TaskListener.class);
             run.keepLog(true);
+            EnvVars environment = run.getEnvironment(listener);
+            run.setDescription("build for "+environment.get("BUILD_NUMBER"));
             FilePath filePath = context.get(FilePath.class);
             FilePath lastBuild = filePath.child("lastBuild");
             PrintStream logger = listener.getLogger();
