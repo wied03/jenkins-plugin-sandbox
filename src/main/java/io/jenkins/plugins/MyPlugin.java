@@ -51,15 +51,15 @@ public final class MyPlugin extends Step {
             listener.getLogger().println("writing to "+lastBuild.toURI());
             lastBuild.write("hello",
                             null);
-//            StashManager.stash((Run)this.getContext().get(Run.class),
-//                               "theStash",
-//                               (FilePath)this.getContext().get(FilePath.class),
-//                               (Launcher)this.getContext().get(Launcher.class),
-//                               (EnvVars)this.getContext().get(EnvVars.class),
-//                               (TaskListener)this.getContext().get(TaskListener.class),
-//                               null,
-//                               null,
-//                               false, false);
+            StashManager.stash((Run)this.getContext().get(Run.class),
+                               "theStash",
+                               (FilePath)this.getContext().get(FilePath.class),
+                               (Launcher)this.getContext().get(Launcher.class),
+                               (EnvVars)this.getContext().get(EnvVars.class),
+                               (TaskListener)this.getContext().get(TaskListener.class),
+                               "lastBuild",
+                               null,
+                               false, false);
             listener.getLogger().println("changeset size " + run.getChangeSets().size());
             listener.getLogger().println("we ran with parameter " + theParameter);
             return "DEV";
